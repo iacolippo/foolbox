@@ -31,13 +31,8 @@ class SklearnModel(Model):
         predictions = self._model.predict_proba(images)
         assert predictions.ndim == 2
         assert predictions.shape == (n, self.num_classes())
+        assert predictions.sum() - images.shape[0] < 1e-5
         return predictions
-
-    """
-    For RidgeClassifier
-    d = clf.decision_function(x)[0]
-    probs = np.exp(d) / np.sum(np.exp(d))
-    """
 
     def num_classes(self):
         return self._num_classes
